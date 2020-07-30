@@ -2,13 +2,18 @@ package com.github.ede.ConnectFourGame.controllers;
 
 
 import com.github.ede.ConnectFourGame.models.Game;
+import com.github.ede.ConnectFourGame.models.Player;
 import com.github.ede.ConnectFourGame.repository.GameRepository;
+import com.github.ede.ConnectFourGame.services.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Provider;
 import java.util.Optional;
 
 @Controller
@@ -16,12 +21,13 @@ import java.util.Optional;
 @CrossOrigin(origins = "http://localhost:3000")
 public class GameController {
     @Autowired
+    GameService gameService;
+    @Autowired
     GameRepository gameRepository;
-
-    @PostMapping
-    public ResponseEntity<Game> addGame(@Valid @RequestBody Game game) {
-        Game connectFourGame = gameRepository.save(game);
-        return ResponseEntity.ok(game);
+    @PostMapping(value = "/creategame")
+    public ResponseEntity<Long> addGame(@Valid @RequestBody Player player) {
+        Long gameId = gameService.createGame(player);
+        return ResponseEntity.ok(gameId);
     }
 
     @GetMapping("/game/{gameId}")

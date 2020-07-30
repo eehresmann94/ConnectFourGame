@@ -27,8 +27,6 @@ public class Player {
 
     @Column
     @NotEmpty(message = "Passwords must have a min of 7 Characters and a max of 50 characters.")
-    @Min(value = 7)
-    @Max(value = 50)
     private String playerPassword;
 
     @Column

@@ -5,10 +5,7 @@ import com.github.ede.ConnectFourGame.repository.PieceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -25,5 +22,14 @@ public class PieceController {
         Piece connectFourPiece = pieceRepository.save(piece);
         return ResponseEntity.ok(piece);
     }
+
+    @GetMapping("/piece/{pieceId}")
+    public ResponseEntity<Piece> getPiece(@PathVariable("pieceId") Long pieceId){
+        Piece connectFourPiece = pieceRepository.findById(pieceId).orElse(null);
+        assert connectFourPiece != null;
+        return ResponseEntity.ok(connectFourPiece);
+    }
+
+
 
 }

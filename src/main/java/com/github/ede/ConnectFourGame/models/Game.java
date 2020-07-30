@@ -14,7 +14,7 @@ import java.awt.*;
 public class Game {
     @Id
     @GeneratedValue
-    private long gameId;
+    private Long gameId;
 
     @OneToOne
     private Player Player1;
