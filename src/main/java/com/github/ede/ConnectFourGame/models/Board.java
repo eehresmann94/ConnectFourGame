@@ -20,4 +20,8 @@ public class Board {
     private long gameBoardId;
     @OneToMany
     private List<Piece> gamePieces;
+
+    public void appendPiece(Piece piece){
+        gamePieces.add(piece);
+    }
 }

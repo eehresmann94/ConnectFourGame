@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.awt.*;
 
 @Data
 @Entity
@@ -23,7 +22,7 @@ public class Game {
     @Column
     private boolean gameWon;
     @Column
-    private String playerTurnName;
+    private Boolean playerTurnName;
 
     @OneToOne
     private Board gameBoard;

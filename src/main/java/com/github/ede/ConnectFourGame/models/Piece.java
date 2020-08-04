@@ -16,11 +16,11 @@ import javax.persistence.Id;
 public class Piece {
     @Id
     @GeneratedValue
-    private long gameBoardId;
+    private Long gameBoardId;
     @Column
-    private int xAxisLocation;
+    private Integer xAxisLocation;
     @Column
-    private int yAxisLocation;
+    private Integer yAxisLocation;
     @Column
     private String pieceColor;
 }

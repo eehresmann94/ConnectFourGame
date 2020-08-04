@@ -24,10 +24,17 @@ public class GameController {
     GameService gameService;
     @Autowired
     GameRepository gameRepository;
+
     @PostMapping(value = "/creategame")
     public ResponseEntity<Long> addGame(@Valid @RequestBody Player player) {
         Long gameId = gameService.createGame(player);
         return ResponseEntity.ok(gameId);
+    }
+
+    @PutMapping("/creategame/{gameId}")
+    public ResponseEntity<Game> appendPlayer2(@PathVariable("gameId") Long gameId, @RequestBody Player player2 ){
+        Game updatedConnectFourGame = gameService.appendPlayer2(player2,gameId);
+        return ResponseEntity.ok(updatedConnectFourGame);
     }
 
     @GetMapping("/game/{gameId}")
@@ -47,6 +54,11 @@ public class GameController {
         } else {
             return ResponseEntity.ok("Your Game was deleted");
         }
+    }
 
+    @RequestMapping(value = "/game/{gameId}/{peiceXAxis}",method = RequestMethod.GET)
+    public ResponseEntity<Game> addPieceToGame(@PathVariable("peiceXAxis") Integer peiceXAxis,@PathVariable("gameId")Long gameId){
+        Game connectFourGame = gameService.turnService(peiceXAxis,gameId);
+        return ResponseEntity.ok(connectFourGame);
     }
 }
