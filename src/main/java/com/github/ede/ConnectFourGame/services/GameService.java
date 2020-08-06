@@ -11,6 +11,7 @@ import com.github.ede.ConnectFourGame.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.Max;
 import java.util.List;
 import java.util.Random;
 
@@ -40,20 +41,24 @@ public class GameService {
         return newGame.getGameId();
     }
 
+    // Appends a second player to a current ConnectFourGame based on Id.
     public Game appendPlayer2(Player player2, Long gameId){
         Random random = new Random();
         //Gets a Game Object from DB with passed argument gameId
         Game connectFourGame = gameRepository.getOne(gameId);
-        //Saves the player to the db so it can be
+        //Saves the player to so its Id can be referenced by the other functions
         player2 = playerRepository.save(player2);
+        //appends player 2 to the connectFourGame
         connectFourGame.setPlayer2(player2);
-        boolean turn = random.nextBoolean();
+        //creates the turn for the players and randomizes the turns
+        boolean turn;
+        turn = random.nextBoolean();
         connectFourGame.setPlayerTurnName(turn);
         connectFourGame = gameRepository.save(connectFourGame);
         return connectFourGame;
     }
 
-    public Game turnService(Integer peiceXAxis, Long gameId){
+    public Game turnService(peiceXAxis, Long gameId){
         Game connectFourGame = gameRepository.getOne(gameId);
         List<Piece> pieceList = connectFourGame.getGameBoard().getGamePieces();
         int yAxisCounter = 1;
