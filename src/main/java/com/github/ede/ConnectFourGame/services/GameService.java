@@ -58,12 +58,12 @@ public class GameService {
         return connectFourGame;
     }
 
-    public Game turnService(peiceXAxis, Long gameId){
+    public Game turnService(Integer pieceXAxis, Long gameId){
         Game connectFourGame = gameRepository.getOne(gameId);
         List<Piece> pieceList = connectFourGame.getGameBoard().getGamePieces();
         int yAxisCounter = 1;
         for (int i = 0; i < pieceList.size(); i++) {
-            if(pieceList.get(i).getXAxisLocation().equals(peiceXAxis)) {
+            if(pieceList.get(i).getXAxisLocation().equals(pieceXAxis)) {
                 yAxisCounter++;
             }
         }
@@ -71,7 +71,7 @@ public class GameService {
             throw new RuntimeException("This Column is filled with peices! Please make a new selection");
         }
         Piece newPiece = new Piece();
-        newPiece.setXAxisLocation(peiceXAxis);
+        newPiece.setXAxisLocation(pieceXAxis);
         newPiece.setYAxisLocation(yAxisCounter);
         newPiece.setGameBoardId(connectFourGame.getGameBoard().getGameBoardId());
 

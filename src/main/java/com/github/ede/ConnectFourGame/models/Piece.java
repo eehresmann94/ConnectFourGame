@@ -21,15 +21,17 @@ public class Piece {
     @Id
     @GeneratedValue
     private Long gameBoardId;
-    @Column
 
     //limits the value of the X axis to a value of 1-6 to emulate a real game board.
-    @Min(1)
-    @Max(6)
-    private Integer xAxisLocation;
     @Column
+    @Min(value = 1, message = "Your value is too low for this movement")
+    @Max(value = 6,message = "Your Value is too high for this movement")
+    private Integer xAxisLocation;
 
+    @Column
     private Integer yAxisLocation;
+
     @Column
     private String pieceColor;
+
 }
