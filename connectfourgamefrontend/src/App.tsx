@@ -4,6 +4,7 @@ import GamePage from "./compoents/pages/GamePage/index"
 
 function App() {
   return (
+    
     <GamePage />
   );
 }
