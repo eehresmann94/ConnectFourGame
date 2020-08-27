@@ -1,26 +1,20 @@
 package com.github.ede.ConnectFourGame.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import java.util.Objects;
 
 
-@Data
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
 public class Piece {
 
     @Id
     @GeneratedValue
-    private Long gameBoardId;
+    private Long pieceId;
 
     //limits the value of the X axis to a value of 1-6 to emulate a real game board.
     @Column
@@ -34,4 +28,50 @@ public class Piece {
     @Column
     private String pieceColor;
 
+    public Long getPieceId() {
+        return pieceId;
+    }
+
+    public void setPieceId(Long pieceId) {
+        this.pieceId = pieceId;
+    }
+
+    public Integer getXAxisLocation() {
+        return xAxisLocation;
+    }
+
+    public void setXAxisLocation(Integer xAxisLocation) {
+        this.xAxisLocation = xAxisLocation;
+    }
+
+    public Integer getYAxisLocation() {
+        return yAxisLocation;
+    }
+
+    public void setYAxisLocation(Integer yAxisLocation) {
+        this.yAxisLocation = yAxisLocation;
+    }
+
+    public String getPieceColor() {
+        return pieceColor;
+    }
+
+    public void setPieceColor(String pieceColor) {
+        this.pieceColor = pieceColor;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Piece piece = (Piece) o;
+        return Objects.equals(xAxisLocation, piece.xAxisLocation) &&
+                Objects.equals(yAxisLocation, piece.yAxisLocation) &&
+                Objects.equals(pieceColor, piece.pieceColor);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(xAxisLocation, yAxisLocation, pieceColor);
+    }
 }

@@ -21,6 +21,7 @@ public class Game {
     private Player Player2;
     @Column
     private boolean gameWon;
+    //TODO Need to refactor this to isPlayerOneTurn
     @Column
     private Boolean playerTurnName;
 

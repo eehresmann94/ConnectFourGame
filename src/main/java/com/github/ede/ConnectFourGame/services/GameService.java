@@ -11,7 +11,6 @@ import com.github.ede.ConnectFourGame.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.Max;
 import java.util.List;
 import java.util.Random;
 
@@ -58,6 +57,148 @@ public class GameService {
         return connectFourGame;
     }
 
+    private boolean gameWinChecker(Game connectFourGame, Piece newPiece){
+        if(
+                verticalWinChecker(connectFourGame,newPiece) ||
+                horizontalLeftWinChecker(connectFourGame,newPiece) ||
+                horizontalRightWinChecker(connectFourGame,newPiece) ||
+                diagonalUpRightWinChecker(connectFourGame,newPiece)||
+                diagonalDownRightWinChecker(connectFourGame,newPiece) ||
+                diagonalDownLeftWinChecker(connectFourGame, newPiece) ||
+                diagonalUpLeftWinChecker(connectFourGame,newPiece)
+        ){
+            return true;
+        }
+        return false;
+    }
+
+    private boolean verticalWinChecker(Game connectFourGame, Piece newPiece){
+        List<Piece> pieceList = connectFourGame.getGameBoard().getGamePieces();
+        int counter = 1;
+        for (int i = 1; i < 4 ; i++) {
+            Piece comparePiece = new Piece();
+            comparePiece.setPieceColor(newPiece.getPieceColor());
+            comparePiece.setXAxisLocation(newPiece.getXAxisLocation());
+            comparePiece.setYAxisLocation(newPiece.getYAxisLocation()-i);
+            if (pieceList.contains(comparePiece)) {
+                counter ++;
+            }
+        }
+        if (counter ==4){
+            return true;
+        }
+        return false;
+    }
+
+
+
+    private boolean horizontalLeftWinChecker(Game connectFourGame, Piece newPiece){
+        List<Piece> pieceList = connectFourGame.getGameBoard().getGamePieces();
+        int counter = 1;
+        for (int i = 4; i > 1; i--) {
+            Piece comparePiece = new Piece();
+            comparePiece.setPieceColor(newPiece.getPieceColor());
+            comparePiece.setYAxisLocation(newPiece.getYAxisLocation());
+            comparePiece.setXAxisLocation(newPiece.getXAxisLocation() +i);
+            if (pieceList.contains(comparePiece)) {
+                counter ++;
+            }
+        }
+        if (counter ==4){
+            return true;
+        }
+        return false;
+    }
+    private boolean horizontalRightWinChecker(Game connectFourGame, Piece newPiece){
+        List<Piece> pieceList = connectFourGame.getGameBoard().getGamePieces();
+        int counter = 1;
+        for (int i = 1; i < 4 ; i++) {
+            Piece comparePiece = new Piece();
+            comparePiece.setPieceColor(newPiece.getPieceColor());
+            comparePiece.setYAxisLocation(newPiece.getYAxisLocation());
+            comparePiece.setXAxisLocation(newPiece.getXAxisLocation() +i);
+            if (pieceList.contains(comparePiece)) {
+                counter ++;
+            }
+        }
+        if (counter ==4){
+            return true;
+        }
+        return false;
+    }
+
+    private boolean diagonalUpRightWinChecker(Game connectFourGame, Piece newPiece){
+        List<Piece> pieceList = connectFourGame.getGameBoard().getGamePieces();
+        int counter = 1;
+        for (int i = 1; i < 4; i++) {
+            Piece comparePiece = new Piece();
+            comparePiece.setPieceColor(newPiece.getPieceColor());
+            comparePiece.setYAxisLocation(newPiece.getYAxisLocation() +i);
+            comparePiece.setXAxisLocation(newPiece.getXAxisLocation() +i);
+            if (pieceList.contains(comparePiece)) {
+                counter ++;
+            }
+        }
+        if (counter ==4){
+            return true;
+        }
+        return false;
+    }
+
+    private boolean diagonalDownLeftWinChecker(Game connectFourGame, Piece newPiece){
+        List<Piece> pieceList = connectFourGame.getGameBoard().getGamePieces();
+        int counter = 1;
+        for (int i = 1; i < 4; i++) {
+            Piece comparePiece = new Piece();
+            comparePiece.setPieceColor(newPiece.getPieceColor());
+            comparePiece.setYAxisLocation(newPiece.getYAxisLocation() -i);
+            comparePiece.setXAxisLocation(newPiece.getXAxisLocation() -i);
+            if (pieceList.contains(comparePiece)) {
+                counter ++;
+            }
+        }
+        if (counter ==4){
+            return true;
+        }
+        return false;
+    }
+
+    private boolean diagonalDownRightWinChecker(Game connectFourGame, Piece newPiece){
+        List<Piece> pieceList = connectFourGame.getGameBoard().getGamePieces();
+        int counter = 1;
+        for (int i = 1; i < 4; i++) {
+            Piece comparePiece = new Piece();
+            comparePiece.setPieceColor(newPiece.getPieceColor());
+            comparePiece.setYAxisLocation(newPiece.getYAxisLocation() -i);
+            comparePiece.setXAxisLocation(newPiece.getXAxisLocation() +i);
+            if (pieceList.contains(comparePiece)) {
+                counter ++;
+            }
+        }
+        if (counter ==4){
+            return true;
+        }
+        return false;
+    }
+
+    private boolean diagonalUpLeftWinChecker(Game connectFourGame, Piece newPiece){
+        List<Piece> pieceList = connectFourGame.getGameBoard().getGamePieces();
+        int counter = 1;
+        for (int i = 1; i < 4; i++) {
+            Piece comparePiece = new Piece();
+            comparePiece.setPieceColor(newPiece.getPieceColor());
+            comparePiece.setYAxisLocation(newPiece.getYAxisLocation() +i);
+            comparePiece.setXAxisLocation(newPiece.getXAxisLocation() -i);
+            if (pieceList.contains(comparePiece)) {
+                counter ++;
+            }
+        }
+        if (counter ==4){
+            return true;
+        }
+        return false;
+    }
+
     public Game turnService(Integer pieceXAxis, Long gameId){
         Game connectFourGame = gameRepository.getOne(gameId);
         List<Piece> pieceList = connectFourGame.getGameBoard().getGamePieces();
@@ -73,7 +214,7 @@ public class GameService {
         Piece newPiece = new Piece();
         newPiece.setXAxisLocation(pieceXAxis);
         newPiece.setYAxisLocation(yAxisCounter);
-        newPiece.setGameBoardId(connectFourGame.getGameBoard().getGameBoardId());
+        newPiece.setPieceId(connectFourGame.getGameBoard().getGameBoardId());
 
         if(connectFourGame.getPlayerTurnName()){
             newPiece.setPieceColor("Red");
@@ -87,6 +228,11 @@ public class GameService {
         connectFourGame.getGameBoard().appendPiece(newPiece);
 
         connectFourGame = gameRepository.save(connectFourGame);
+        boolean connectFourGameResult = gameWinChecker(connectFourGame, newPiece);
+        if(connectFourGameResult){
+            connectFourGame.setGameWon(true);
+            connectFourGame = gameRepository.save(connectFourGame);
+        }
         return connectFourGame;
 
     }
