@@ -2,7 +2,8 @@ import React from 'react';
 import Board from '../../subcompoents/Board';
 import { BoardStateType } from '../../../types/types';
 import axios from 'axios';
-import { useInterval } from '../../hooks/useInterval';
+import { useInterval } from '../../hooks/useInterval'; 
+import NavBar from '../../subcompoents/NavBar';
 
 interface pieceData {
     gameBoardId: number,
@@ -27,6 +28,9 @@ interface getData {
 }
 
 const GamePage = () => {
+    
+    
+    
     const [gameInfo, setGameInfo] = React.useState<any>({
         gameId: 2
     })
@@ -59,7 +63,8 @@ const GamePage = () => {
 
     return (
         <div>
-            <Board gameBoard={board} />
+            <NavBar/>
+            <Board gameBoard={board} /> 
         </div>
     )
 }
