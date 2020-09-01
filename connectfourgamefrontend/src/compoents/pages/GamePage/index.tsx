@@ -2,8 +2,8 @@ import React from 'react';
 import Board from '../../subcompoents/Board';
 import { BoardStateType } from '../../../types/types';
 import axios from 'axios';
-import { useInterval } from '../../hooks/useInterval'; 
-import NavBar from '../../subcompoents/NavBar';
+import { useInterval } from '../../hooks/useInterval';
+
 
 interface pieceData {
     gameBoardId: number,
@@ -28,9 +28,9 @@ interface getData {
 }
 
 const GamePage = () => {
-    
-    
-    
+
+
+
     const [gameInfo, setGameInfo] = React.useState<any>({
         gameId: 2
     })
@@ -46,16 +46,18 @@ const GamePage = () => {
         ]
     });
 
+    const setNewBoard = (data: getData) => {
+        console.log(data);
+        const newState = board;
+        data.data.gameBoard.gamePieces.forEach(piece => {
+            newState.gameBoard[piece.xaxisLocation - 1][piece.yaxisLocation - 1] = piece.pieceColor;
+        });
+        setBoard(newState);
+    }
+
     useInterval(async () => {
         axios.get("http://localhost:8080/games/game/" + gameInfo.gameId).then((data: getData) => {
-            console.log(data);
-            if (board.gameBoard[data.data.gameBoard.gamePieces[data.data.gameBoard.gamePieces.length - 1].xaxisLocation][data.data.gameBoard.gamePieces[data.data.gameBoard.gamePieces.length - 1].yaxisLocation -1] === "white") {
-                const newBoardState = {
-                    ...board,
-                }
-                newBoardState.gameBoard[5 - (data.data.gameBoard.gamePieces[data.data.gameBoard.gamePieces.length - 1].yaxisLocation -1)][data.data.gameBoard.gamePieces[data.data.gameBoard.gamePieces.length - 1].xaxisLocation -1] = data.data.gameBoard.gamePieces[data.data.gameBoard.gamePieces.length - 1].pieceColor;
-                setBoard(newBoardState);
-            }
+            
         }).catch((err) => {
             console.log(err);
         })
@@ -63,8 +65,8 @@ const GamePage = () => {
 
     return (
         <div>
-            <NavBar/>
-            <Board gameBoard={board} /> 
+            
+            <Board gameBoard={board} />
         </div>
     )
 }

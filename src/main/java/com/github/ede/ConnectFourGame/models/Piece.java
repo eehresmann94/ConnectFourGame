@@ -18,8 +18,8 @@ public class Piece {
 
     //limits the value of the X axis to a value of 1-6 to emulate a real game board.
     @Column
-    @Min(value = 1, message = "Your value is too low for this movement")
-    @Max(value = 6,message = "Your Value is too high for this movement")
+    @Min(value = 1, message = "{\"err\": \"Your value is too low for this movement\"}")
+    @Max(value = 6,message = "{\"err\": \"Your value is too high for this movement\"}")
     private Integer xAxisLocation;
 
     @Column

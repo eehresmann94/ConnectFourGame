@@ -10,6 +10,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class ConnectFourGameExceptionController {
     @ExceptionHandler(value = TransactionSystemException.class)
     public ResponseEntity<Object> transactionSystemException(TransactionSystemException e){
-        return new ResponseEntity<>("Number is out of bounds, please use a number 1-6 for your input", HttpStatus.I_AM_A_TEAPOT);
+        return new ResponseEntity<>("{\"err\": \"Number is out of bounds, please use a number 1-6 for your input\"}", HttpStatus.I_AM_A_TEAPOT);
     }
 }
