@@ -9,9 +9,12 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import axios from 'axios'
 
+
 interface PropsType {
     gameBoard: BoardStateType;
+
 }
+
 
 const Board = (props: PropsType) => {
 
@@ -19,9 +22,10 @@ const Board = (props: PropsType) => {
     const [errorMessage, setErrorMessage] = React.useState<string|undefined>(undefined);
    
     const submitPiece =() =>{ 
-        axios.get("http://localhost:8080/games/game/2/" + rowChoice).then((res) => {
+        
+        axios.get("http://localhost:8080/games/game/3/" + rowChoice).then((res) => {
             if(res.status === 418){
-                // setErrorMessage(res.data.err);
+                 setErrorMessage(res.data.err);
             }
         
         }).catch((err: any) => {
@@ -64,6 +68,7 @@ const Board = (props: PropsType) => {
             
 
                 </Form>
+                
             </Container>
         </div>
     )
