@@ -49,15 +49,7 @@ const GamePage = (props: any) => {
 
     }
 
-    // const [gameInfo, setGameInfo] = React.useState<any>({
-    //     gameId: props.playerInformation.info.gameId,
-    //     name: props.playerInformation.info.name,
-    //     playersTurn: props.playerInformation.info.playerTurnName,
-    //     gameWon: props.playerInformation.info.gameWon
-
-
-
-    // })
+   
 
     const [board, setBoard] = React.useState<BoardStateType>({
         gameBoard: [
@@ -74,15 +66,18 @@ const GamePage = (props: any) => {
         console.log(data);
         const newState = board;
         data.data.gameBoard.gamePieces.forEach(piece => {
-            newState.gameBoard[piece.xaxisLocation - 1][piece.yaxisLocation - 1] = piece.pieceColor;
+            newState.gameBoard[6 - piece.yaxisLocation][piece.xaxisLocation - 1] = piece.pieceColor;
         });
+        
         setBoard(newState);
 
     }
 
     useInterval(async () => {
-        axios.get("http://localhost:8080/games/game/" + GameInfo).then((data: getData) => {
-
+        console.log(props)
+        axios.get("http://localhost:8080/games/game/" + props.currentGameInfo.info.gameId).then((data: getData) => {
+        console.log(data)
+        setNewBoard(data) 
         }).catch((err) => {
             console.log(err);
         })
@@ -91,7 +86,7 @@ const GamePage = (props: any) => {
     return (
         <div>
 
-            <Board gameBoard={board} />
+            <Board currentGameInfo={props.currentGameInfo} gameBoard={board} />
 
             <h3>Player Stats</h3>
             <Jumbotron >

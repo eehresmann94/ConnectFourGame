@@ -5,10 +5,13 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/esm/Button';
 import axios from 'axios';
+import { Redirect } from 'react-router-dom';
+import { useInterval } from '../../hooks/useInterval';
 
 
 
 const CreateGamePage = (props:any) => {
+  const [playerTwoReady, setPlayerTwoReady] = React.useState(false)
   const [createGame, setCreateGame] = React.useState({
     gameCreateInfo: {
       gameId: null,
@@ -81,10 +84,29 @@ const CreateGamePage = (props:any) => {
         playerTurnName: "",
         gameWon: false
       }})
+      props.setCurrentGameInfo({info: {
+        gameId: res.data,
+        playerNumber: 1,
+        playerTurn: false,
+        isGameWon: false
+      }})
+      console.log(props.currentGameInfo)
     }).catch((err) =>{
       console.log(err)
     })
   }
+  
+  useInterval(async () => {
+    if(createGame.gameCreateInfo.gameId !== null){
+    axios.get("http://localhost:8080/games/game/" + createGame.gameCreateInfo.gameId).then((playerData) => {
+    
+    if(playerData.data.player2.playerName !== "" ){
+      setPlayerTwoReady(true)
+    }
+    }).catch((err) => {
+        console.log(err);
+    })}
+}, 2000)
 
   return (
     <div>
@@ -120,6 +142,7 @@ const CreateGamePage = (props:any) => {
         </Modal.Header>
         <Modal.Body>Game Id:{createGame.gameCreateInfo.gameId}</Modal.Body>
       </Modal>
+      {playerTwoReady && <Redirect to="/game"/>}
     </div>
   )
 

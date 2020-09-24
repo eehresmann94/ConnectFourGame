@@ -95,7 +95,12 @@ const JoinGamePage = (props:any) => {
         playerTurnName: res.data.playerTurnName,
         gameWon: res.data.gameWon
       }})
-
+      props.setCurrentGameInfo({info: {
+        gameId: res.data.gameId,
+        playerNumber: 2,
+        playerTurn: res.data.playerTurnName,
+        isGameWon: res.data.gameWon
+      }})
       props.changePlayerOneInfo({info:{
         gameWon: res.data.gameWon,
         gameId: res.data.gameId,

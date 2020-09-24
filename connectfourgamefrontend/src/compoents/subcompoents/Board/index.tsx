@@ -16,14 +16,13 @@ interface PropsType {
 }
 
 
-const Board = (props: PropsType) => {
-
+const Board = (props: any) => {
     const [rowChoice, setRowChoice] = React.useState<string|null>(null);
     const [errorMessage, setErrorMessage] = React.useState<string|undefined>(undefined);
    
     const submitPiece =() =>{ 
-        
-        axios.get("http://localhost:8080/games/game/3/" + rowChoice).then((res) => {
+       //@ts-ignore 
+        axios.get("http://localhost:8080/games/game/"+ props.currentGameInfo.info.gameId +"/" + (rowChoice)).then((res) => {
             if(res.status === 418){
                  setErrorMessage(res.data.err);
             }
@@ -41,11 +40,11 @@ const Board = (props: PropsType) => {
         <div>
             <Container>
                 {
-                    props.gameBoard.gameBoard.map((row, rowindex) => {
+                    props.gameBoard.gameBoard.map((row:any, rowindex:any) => {
                         return (
                             <Row key={rowindex} >
                                 {
-                                    row.map((pieceColor, colindex) => {
+                                    row.map((pieceColor:any, colindex:any) => {
                                         return (
                                             <Col bsPrefix="deSpacer" key={colindex}>
                                                 <Square pieceColor={pieceColor} />
